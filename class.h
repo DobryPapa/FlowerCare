@@ -1,8 +1,7 @@
-//W przyszłości można wprowadzić "interfejs"
 
 class Supply
 {
-private:
+protected:
     byte pin;
 
 public:
@@ -28,19 +27,18 @@ public:
     }
 };
 
-class MoistureSensor
+class MoistureSensor : public Supply
 {
 private:
-    byte pin;
     byte enablePin;
 
 public:
-    MoistureSensor(byte pin)
+    MoistureSensor(byte pin) : Supply(pin)
     {
         this->pin = pin;
         Init();
     }
-    MoistureSensor(byte pin, byte enablePin)
+    MoistureSensor(byte pin, byte enablePin) : Supply(pin)
     {
         this->pin = pin;
         this->enablePin = enablePin;
@@ -70,8 +68,8 @@ public:
         moisture = analogRead(0) * 100 / 1024;
         delay(50);
         moisture = analogRead(0) * 100 / 1024;
-        Serial.print("Wilgotnosc: ");
-        Serial.println(moisture);
+        Serial.println("Moisture: ");
+        Serial.print(moisture);
         return moisture;
     }
 };
